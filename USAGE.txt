@@ -1,0 +1,23 @@
+DEAP EEG Differential Entropy Pipeline (final pack)
+
+Quick start (Windows / PowerShell):
+1) Create and activate a venv
+   python -m venv .venv
+   .venv\Scripts\activate
+
+2) Install dependencies
+   pip install -r requirements.txt
+
+3) Calibrate artifact threshold on Fp1/Fp2 (avg_signal)
+   python calibrate_artifact_threshold_fp1fp2.py --data_dir data
+
+4) Run the pipeline (replace ARTIFACT_VAR with your chosen threshold)
+   python main_deap_pipeline.py --data_dir data --out_dir results_v3_fp12_p995 --artifact_var ARTIFACT_VAR --label_min 1 --label_max 9 --min_clean_windows 20 --combine_mode avg_signal
+
+5) Run analysis scripts
+   python analyze_deap_results.py --dir results_v3_fp12_p995
+   python analyze_deap_results_mixedlm_v2.py --dir results_v3_fp12_p995
+   python deap_within_between.py --dir results_v3_fp12_p995
+
+6) Build the manuscript with figures (requires python-docx)
+   python build_manuscript_with_figures.py --results_dir results_v3_fp12_p995
